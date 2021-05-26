@@ -34,8 +34,7 @@ jobs:
 
            # Check if a Realm app already exists for this feature branch
            output=$(mongo "mongodb+srv://${{ secrets.ATLAS_URI_FEATURE_BRANCHES }}/GitHubActionsMetadata" --username ${{ secrets.ATLAS_USERNAME_FEATURE_BRANCHES }} --password ${{ secrets.ATLAS_PASSWORD_FEATURE_BRANCHES }} --eval "db.metadata.findOne({'branch': '$branch'})")
-           echo $output
-           
+
            if [[ $output == *null ]]; then
               echo "No Realm app found for this branch. A new app will be pushed later in this workflow"
            else
@@ -95,7 +94,7 @@ jobs:
            realm-cli push --remote="${{ env.REALM_APP_ID }}" -y
 
     - name: "Create a new Realm app for feature branches where the Realm app does not yet exist"
-      if: ${{ !env.REALM_APP_ID }} && ${{ github.event_name == 'push' }}
+      if: ${{ env.REALM_APP_ID != null }} && ${{ github.event_name == 'push' }}
       run: | 
 
            # Push to the Atlas project specifically for feature branches
