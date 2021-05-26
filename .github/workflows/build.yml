@@ -24,41 +24,22 @@ jobs:
       run: echo "REALM_APP_ID=inventorydemo-staging-zahjj" >> $GITHUB_ENV
 
     - name: "Check if app already exists"
+      if: ${{ !env.REALM_APP_ID }} && ${{ github.event_name != 'pull_request' }}
       run: |
-           output=$(mongo "mongodb+srv://cluster0.blumg.mongodb.net/GitHubActionsMetadata" --username ${{ secrets.ATLAS_USERNAME }} --password ${{ secrets.ATLAS_PASSWORD }} --eval "db.metadata.findOne({'a': 'c'})")
+           output=$(mongo "mongodb+srv://${{ secrets.ATLAS_URI }}/GitHubActionsMetadata" --username ${{ secrets.ATLAS_USERNAME }} --password ${{ secrets.ATLAS_PASSWORD }} --eval "db.metadata.findOne({'a': 'c'})")
            echo $output
+
+           ref=$(echo $ {{github.ref}})
+           echo $ref
+           branch=$(echo "${branch##*/}")
+           echo $branch
 
            if [[ $output == *null ]]; then
               echo "null"
            else
-              app_id=$(echo $output | sed 's/^.*a" : "\([^"]*\).*/\1/')
+              app_id=$(echo $output | sed 's/^.*${{ $branch }}" : "\([^"]*\).*/\1/')
               echo $app_id
            fi
-           
-           # mongo "mongodb+srv://cluster0.blumg.mongodb.net/GitHubActionsMetadata" --username ${{ secrets.ATLAS_USERNAME }} --password ${{ secrets.ATLAS_PASSWORD }} --eval "db.metadata.findOne({'a': 'b'})"
-           #echo "OUTPUT1=$(mongo "mongodb+srv://cluster0.blumg.mongodb.net/GitHubActionsMetadata" --username ${{ secrets.ATLAS_USERNAME }} --password ${{ secrets.ATLAS_PASSWORD }} --eval "db.metadata.findOne({'a': 'b'})")" >> $GITHUB_ENV 
-           # mongo "mongodb+srv://cluster0.blumg.mongodb.net/GitHubActionsMetadata" --username ${{ secrets.ATLAS_USERNAME }} --password ${{ secrets.ATLAS_PASSWORD }} --eval "db.metadata.findOne({'a': 'c'})"
-           #echo "OUTPUT2=$(mongo "mongodb+srv://cluster0.blumg.mongodb.net/GitHubActionsMetadata" --username ${{ secrets.ATLAS_USERNAME }} --password ${{ secrets.ATLAS_PASSWORD }} --eval "db.metadata.findOne({'a': 'c'})")" >> $GITHUB_ENV 
-
-           
-    - name: "Check if syntax"
-      if: endsWith('Hello world', 'ld') 
-      run: |
-           echo ${{env.OUTPUT1}}
-           echo ${{env.OUTPUT2}}
-
-    - name: "Check for null"
-      if: endsWith(${{env.OUTPUT2}}, 'null') 
-      run: |
-           echo ${{env.OUTPUT1}}
-           echo ${{env.OUTPUT2}}
-
-    - name: "Check for not null"
-      if: endsWith(${{env.OUTPUT1}}, 'null') != true
-      run: |
-           echo $output
-           app_id=$(echo $output | sed 's/^.*a" : "\([^"]*\).*/\1/')
-           echo $app_id
 
 # For Pull Requests, create a new Realm app with a new database
 # The Realm app will be stored in an Atlas project used only for CI/CD
@@ -219,7 +200,7 @@ jobs:
 #     # - name: "Delete dynamically generated database"
 #     #   if: ${{ env.IS_DYNAMICALLY_GENERATED_APP }}
 #     #   run: |
-#     #        mongo "mongodb+srv://cluster0.blumg.mongodb.net/InventoryDemo-${{ env.CURRENT_TIME }}" --username ${{ secrets.ATLAS_USERNAME }} --password ${{ secrets.ATLAS_PASSWORD }} --eval "db.dropDatabase()"
+#     #        mongo "mongodb+srv://${{ secrets.ATLAS_URI }}.blumg.mongodb.net/InventoryDemo-${{ env.CURRENT_TIME }}" --username ${{ secrets.ATLAS_USERNAME }} --password ${{ secrets.ATLAS_PASSWORD }} --eval "db.dropDatabase()"
 
 # # AUTOMATICALLY PUSH COMMITS FROM STAGING BRANCH TO MAIN BRANCH  
 
