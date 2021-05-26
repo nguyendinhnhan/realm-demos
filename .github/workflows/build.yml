@@ -43,7 +43,7 @@ jobs:
            echo ${{env.OUTPUT2}}
 
     - name: "Check for not null"
-      if: !endsWith(${{env.OUTPUT1}}, 'null') 
+      if: endsWith(${{env.OUTPUT1}}, 'null') 
       run: |
            app_id=$(echo $output | sed 's/^.*a" : "\([^"]*\).*/\1/')
            echo $app_id
