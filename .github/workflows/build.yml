@@ -43,7 +43,7 @@ jobs:
               echo "No Realm app found for this branch. A new app will be pushed later in this workflow"
            else
               echo "A Realm app was found for this branch. Updates will be pushed to the existing app later in this workflow"
-              app_id=$(echo $output | sed 's/^.*$branch" : "\([^"]*\).*/\1/')
+              app_id=$(echo $output | sed 's/^.*realm_app_id" : "\([^"]*\).*/\1/')
               echo "REALM_APP_ID=$app_id" >> $GITHUB_ENV
            fi
 
