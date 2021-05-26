@@ -25,9 +25,9 @@ jobs:
 
     - name: "Check if app already exists"
       run: |
-           mongo "mongodb+srv://cluster0.blumg.mongodb.net/GitHubActionsMetadata" --username ${{ secrets.ATLAS_USERNAME }} --password ${{ secrets.ATLAS_PASSWORD }} --eval "db.metadata.findOne({'a': 'b'})"
+           # mongo "mongodb+srv://cluster0.blumg.mongodb.net/GitHubActionsMetadata" --username ${{ secrets.ATLAS_USERNAME }} --password ${{ secrets.ATLAS_PASSWORD }} --eval "db.metadata.findOne({'a': 'b'})"
            echo "OUTPUT1=$(mongo "mongodb+srv://cluster0.blumg.mongodb.net/GitHubActionsMetadata" --username ${{ secrets.ATLAS_USERNAME }} --password ${{ secrets.ATLAS_PASSWORD }} --eval "db.metadata.findOne({'a': 'b'})")" >> $GITHUB_ENV 
-           mongo "mongodb+srv://cluster0.blumg.mongodb.net/GitHubActionsMetadata" --username ${{ secrets.ATLAS_USERNAME }} --password ${{ secrets.ATLAS_PASSWORD }} --eval "db.metadata.findOne({'a': 'c'})"
+           # mongo "mongodb+srv://cluster0.blumg.mongodb.net/GitHubActionsMetadata" --username ${{ secrets.ATLAS_USERNAME }} --password ${{ secrets.ATLAS_PASSWORD }} --eval "db.metadata.findOne({'a': 'c'})"
            echo "OUTPUT2=$(mongo "mongodb+srv://cluster0.blumg.mongodb.net/GitHubActionsMetadata" --username ${{ secrets.ATLAS_USERNAME }} --password ${{ secrets.ATLAS_PASSWORD }} --eval "db.metadata.findOne({'a': 'c'})")" >> $GITHUB_ENV 
 
     - name: "Check if syntax"
@@ -43,7 +43,7 @@ jobs:
            echo ${{env.OUTPUT2}}
 
     - name: "Check for not null"
-      if: endsWith(${{env.OUTPUT1}}, 'null') 
+      if: endsWith(${{env.OUTPUT1}}, 'null') != true
       run: |
            app_id=$(echo $output | sed 's/^.*a" : "\([^"]*\).*/\1/')
            echo $app_id
