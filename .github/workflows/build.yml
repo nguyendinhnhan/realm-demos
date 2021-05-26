@@ -23,16 +23,22 @@ jobs:
       if: ${{ github.ref == 'refs/heads/staging' }}
       run: echo "REALM_APP_ID=inventorydemo-staging-zahjj" >> $GITHUB_ENV
 
-    - name: "Check if app already exists"
+# If the REALM_APP_ID is NOT set AND this is not a pull request
+# (meaning this is a push to a feature branch),
+# check if there is already a Realm app for this feature branch
+    - name: "Check if Realm app already exists for feature branch"
       if: ${{ !env.REALM_APP_ID }} && ${{ github.event_name != 'pull_request' }}
       run: |
-           output=$(mongo "mongodb+srv://${{ secrets.ATLAS_URI }}/GitHubActionsMetadata" --username ${{ secrets.ATLAS_USERNAME }} --password ${{ secrets.ATLAS_PASSWORD }} --eval "db.metadata.findOne({'a': 'c'})")
-           echo $output
-
-           ref=$(echo $ {{github.ref}})
+           echo ${{ github.ref }}
+           ref=$(echo ${{ github.ref }})
            echo $ref
            branch=$(echo "${ref##*/}")
            echo $branch
+
+           output=$(mongo "mongodb+srv://${{ secrets.ATLAS_URI }}/GitHubActionsMetadata" --username ${{ secrets.ATLAS_USERNAME }} --password ${{ secrets.ATLAS_PASSWORD }} --eval "db.metadata.findOne({'branch': 'c'})")
+           echo $output
+
+           
 
            if [[ $output == *null ]]; then
               echo "null"
