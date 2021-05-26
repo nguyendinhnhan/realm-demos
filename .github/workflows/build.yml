@@ -27,7 +27,7 @@ jobs:
 # (meaning this is a push to a feature branch),
 # check if there is already a Realm app for this feature branch
     - name: "Check if Realm app already exists for feature branch"
-      if: ${{ !env.REALM_APP_ID }} && ${{ github.event_name != 'pull_request' }}
+      if: ${{ !env.REALM_APP_ID }} && ${{ github.event_name == 'push' }}
       run: | 
 
            # Create a new environment variable named IS_FEATURE_BRANCH to indicate this is
@@ -98,7 +98,7 @@ jobs:
            realm-cli push --remote="${{ env.REALM_APP_ID }}" -y
 
     - name: "Create a new Realm app for feature branches where the Realm app does not yet exist"
-      if: ${{ !env.REALM_APP_ID }} && ${{ github.event_name != 'pull_request' }}
+      if: ${{ !env.REALM_APP_ID }} && ${{ github.event_name == 'push' }}
       run: | 
 
            # Push to the Atlas project specifically for feature branches
