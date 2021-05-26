@@ -32,8 +32,8 @@ jobs:
 
     - name: "Print env variables"
       run: |
-           echo ${{OUTPUT1}}
-           echo ${{OUTPUT2}}
+           echo ${{env.OUTPUT1}}
+           echo ${{env.OUTPUT2}}
 
 # For Pull Requests, create a new Realm app with a new database
 # The Realm app will be stored in an Atlas project used only for CI/CD
