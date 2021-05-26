@@ -94,7 +94,7 @@ jobs:
            realm-cli push --remote="${{ env.REALM_APP_ID }}" -y
 
     - name: "Create a new Realm app for feature branches where the Realm app does not yet exist"
-      if: ${{ env.REALM_APP_ID == null }} && ${{ github.event_name == 'push' }}
+      if: ${{ env.REALM_APP_ID == null && github.event_name == 'push' }}
       run: | 
 
            # Push to the Atlas project specifically for feature branches
