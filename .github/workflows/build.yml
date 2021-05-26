@@ -27,8 +27,14 @@ jobs:
       run: |
            output=$(mongo "mongodb+srv://cluster0.blumg.mongodb.net/GitHubActionsMetadata" --username ${{ secrets.ATLAS_USERNAME }} --password ${{ secrets.ATLAS_PASSWORD }} --eval "db.metadata.findOne({'a': 'b'})")
            echo $output
-           app_id=$(echo $output | sed 's/^.*a" : "\([^"]*\).*/\1/')
-           echo $app_id
+
+           if [[ $output == *null ]]; then
+              echo "null"
+           else
+              app_id=$(echo $output | sed 's/^.*a" : "\([^"]*\).*/\1/')
+              echo $app_id
+           fi
+           
            # mongo "mongodb+srv://cluster0.blumg.mongodb.net/GitHubActionsMetadata" --username ${{ secrets.ATLAS_USERNAME }} --password ${{ secrets.ATLAS_PASSWORD }} --eval "db.metadata.findOne({'a': 'b'})"
            #echo "OUTPUT1=$(mongo "mongodb+srv://cluster0.blumg.mongodb.net/GitHubActionsMetadata" --username ${{ secrets.ATLAS_USERNAME }} --password ${{ secrets.ATLAS_PASSWORD }} --eval "db.metadata.findOne({'a': 'b'})")" >> $GITHUB_ENV 
            # mongo "mongodb+srv://cluster0.blumg.mongodb.net/GitHubActionsMetadata" --username ${{ secrets.ATLAS_USERNAME }} --password ${{ secrets.ATLAS_PASSWORD }} --eval "db.metadata.findOne({'a': 'c'})"
@@ -36,7 +42,7 @@ jobs:
 
            
     - name: "Check if syntax"
-      if: endsWith('Hello world', 'ldzzz') 
+      if: endsWith('Hello world', 'ld') 
       run: |
            echo ${{env.OUTPUT1}}
            echo ${{env.OUTPUT2}}
