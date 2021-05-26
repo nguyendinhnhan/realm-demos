@@ -37,7 +37,7 @@ jobs:
            if [[ $output == *null ]]; then
               echo "null"
            else
-              app_id=$(echo $output | sed 's/^.*${{ $branch }}" : "\([^"]*\).*/\1/')
+              app_id=$(echo $output | sed 's/^.*${{ branch }}" : "\([^"]*\).*/\1/')
               echo $app_id
            fi
 
