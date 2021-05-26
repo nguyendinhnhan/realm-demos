@@ -31,7 +31,7 @@ jobs:
 
            ref=$(echo $ {{github.ref}})
            echo $ref
-           branch=$(echo "${branch##*/}")
+           branch=$(echo "${ref##*/}")
            echo $branch
 
            if [[ $output == *null ]]; then
