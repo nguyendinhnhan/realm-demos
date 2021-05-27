@@ -220,7 +220,7 @@ jobs:
 # the tests fail to allow for manual investigation
     - name: "Delete dynamically generated Realm app"
       if: ${{ env.IS_DYNAMICALLY_GENERATED_APP }}
-      run: realm-cli app delete -app $REALM_APP_ID
+      run: realm-cli app delete -app ${{ env.REALM_APP_ID }}
 
 # Delete the database associated with the Realm app
 # Note: this requires the IP address of the GitHub Actions vm to be in the Atlas access list   
