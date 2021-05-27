@@ -49,6 +49,10 @@ jobs:
            cd inventory/export/sync/environments
            printf '{\n     "values": {"databaseName": "InventoryDemo-%s"}\n}' "$branch" > development.json     
 
+           # Indicate that the Realm app should use the development environment by updating realm_config.json
+           cd ..
+           sed -i txt 's/{/{ "environment": "development",/' realm_config.json
+
 # For Pull Requests, create a new Realm app with a new database
 # The Realm app will be stored in an Atlas project used only for CI/CD
 # The Realm app should use the Testing environment
@@ -96,7 +100,7 @@ jobs:
 
            # Push to the Atlas project specifically for feature branches
            cd inventory/export/sync
-           realm-cli push -y --project 609ea554944fe545460529a1 --environment development 
+           realm-cli push -y --project 609ea554944fe545460529a1
 
            # Retrieve and store the Realm App ID from the output of 'realm-cli app describe'
            output=$(realm-cli app describe)
@@ -113,7 +117,7 @@ jobs:
 
            # Push to the Atlas project specifically for pull requests
            cd inventory/export/sync
-           realm-cli push -y --project 609c100ae9974e12169e2480 --environment testing 
+           realm-cli push -y --project 609c100ae9974e12169e2480
 
            # Retrieve and store the Realm App ID from the output of 'realm-cli app describe'
            output=$(realm-cli app describe)
