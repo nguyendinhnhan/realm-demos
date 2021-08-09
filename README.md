@@ -6,7 +6,9 @@ This repo contains MongoDB Realm demos.  The following is a list of new features
 
 For more information on the Inventory Demo, visit <a href="./inventory">__Inventory Demo__</a>.
 
-For more information on the CI/CD pipeline that was implemented using GitHub Actions, check out this article: [How to Build CI/CD Pipelines for MongoDB Realm Apps Using GitHub Actions](https://developer.mongodb.com/how-to/build-ci-cd-pipelines-realm-apps-github-actions/).
+For more information on the CI/CD pipeline that was implemented using GitHub Actions, check out the following resources:
+- [Article: How to Build CI/CD Pipelines for MongoDB Realm Apps Using GitHub Actions](https://developer.mongodb.com/how-to/build-ci-cd-pipelines-realm-apps-github-actions/)
+- [MongoDB.live 2021 Recording: Building CI/CD Pipelines for MongoDB Realm Apps](https://youtu.be/-JcEa1snwVQ)
 
 # Questions?
 
