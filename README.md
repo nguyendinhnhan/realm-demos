@@ -9,7 +9,7 @@ For more information on the Inventory Demo, visit <a href="./inventory">__Invent
 For more information on the CI/CD pipeline that was implemented using GitHub Actions, check out the following resources:
 - [Article: How to Build CI/CD Pipelines for MongoDB Realm Apps Using GitHub Actions](https://developer.mongodb.com/how-to/build-ci-cd-pipelines-realm-apps-github-actions/)
 - [MongoDB.live 2021 Recording: Building CI/CD Pipelines for MongoDB Realm Apps](https://youtu.be/-JcEa1snwVQ)
-
+ 
 # Questions?
 
 Ask in the [MongoDB Community](https://community.mongodb.com).
